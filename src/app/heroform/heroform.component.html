@@ -1,0 +1,32 @@
+<div class="container">
+<h1>Hero Form</h1>
+    <form (ngSubmit)="onSubmit()" [formGroup]="heroForm" >
+        <label for="name">Name: </label>
+        <input id="name" type="text" formControlName="name" [(ngModel)]="model.name">
+        <div [hidden]="heroForm.get('name')!.valid || heroForm.get('name')!.pristine"
+            class="alert alert-danger">
+            <div *ngIf="heroForm.get('name')!.errors?.['minlength']">Minimum length is 4</div>
+            <div *ngIf="heroForm.get('name')!.errors?.['maxlength']">Maximum length is 30</div>
+            <div *ngIf="heroForm.get('name')!.errors?.['required']"> Name is required</div>
+        </div>
+
+<br>
+        <label for="alterEgo">Alter Ego: </label>
+        <input type="text" formControlName="alterEgo" id="alterEgo"
+               [(ngModel)]="model.alterEgo" name="alterEgo">
+
+<br >
+        <label for="power">Hero Power: </label>
+        <select formControlName="power" id="power"
+                [(ngModel)]="model.power" name="power">
+        <option *ngFor="let pow of powers" [value]="pow">{{pow}}</option>
+        </select>
+        <div [hidden]="heroForm.get('power')!.valid || heroForm.get('power')!.pristine" class="alert alert-danger">
+          Power is required
+        </div>
+<br>
+
+    <button type="submit" class="btn btn-success" [disabled]="!heroForm.valid">Submit</button>
+    <button type="button" class="btn btn-default" (click)="newHero(); heroForm.reset()">New Hero</button>
+  </form>
+</div>
